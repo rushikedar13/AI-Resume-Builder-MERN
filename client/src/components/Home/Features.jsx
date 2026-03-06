@@ -1,137 +1,104 @@
-import React from "react";
-import { useState } from "react";
-import { Zap } from "lucide-react";
-import Title from "./Title";
+import React, { useState } from "react";
+import { Zap, BarChart3, ShieldCheck, FileSpreadsheet } from "lucide-react";
+import Title from "./Title"; // Assuming Title also follows the theme
 
 const Features = () => {
-  const [isHover, setIsHover] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
+
+  const featureList = [
+    {
+      title: "Real-Time Audit",
+      desc: "Live document scoring based on proprietary AI logic and modern engineering benchmarks.",
+      icon: <BarChart3 className="size-5" />,
+    },
+    {
+      title: "Enterprise Encryption",
+      desc: "Bank-grade data protection ensuring your professional history remains private and secure.",
+      icon: <ShieldCheck className="size-5" />,
+    },
+    {
+      title: "Audit-Ready Reports",
+      desc: "Export comprehensive ATS compatibility reports to refine your job application strategy.",
+      icon: <FileSpreadsheet className="size-5" />,
+    },
+  ];
 
   return (
     <div
       id="features"
-      className="flex flex-col items-center my-10 scroll-mt-12"
+      className="bg-[#FCFAF2] py-24 scroll-mt-12 overflow-hidden"
     >
-      <div className="flex items-center gap-2 text-sm text-green-800 bg-green-400/10  rounded-full px-4 py-1">
-        <Zap width={14} />
-        <span>Simple Process</span>
-      </div>
-      <Title
-        title="Build Your Resume"
-        description="Our Streamlined process helps you create a professional resume in minutes with intelligent AI-Powered tools and features."
-      />
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+        {/* Subtle Badge */}
+        <div className="flex items-center gap-2 px-4 py-1 border border-emerald-700/20 rounded-full mb-8">
+          <Zap size={12} className="text-emerald-700 fill-emerald-700" />
+          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-emerald-800">
+            Precision Workflow
+          </span>
+        </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-center xl:-mt-10">
-        <img
-          className="max-w-2xl w-full xl:-ml-32"
-          src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png"
-          alt=""
+        <Title
+          title="Engineered for Impact"
+          description="A high-performance suite designed to transform your professional narrative into a data-driven document."
         />
-        <div
-          className="px-4 md:px-0"
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-        >
-          <div
-            className={
-              "flex items-center justify-center gap-6 max-w-md group cursor-pointer"
-            }
-          >
-            <div
-              className={`p-6 group-hover:bg-violet-100 border border-transparent group-hover:border-violet-300  flex gap-4 rounded-xl transition-colors ${
-                !isHover ? "border-violet-300 bg-violet-100" : ""
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-6 stroke-violet-600"
-              >
-                <path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
-                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="text-base font-semibold text-slate-700">
-                  Real-Time Analytics
-                </h3>
-                <p className="text-sm text-slate-600 max-w-xs">
-                  Get instant insights into your finances with live dashboards.
-                </p>
-              </div>
+
+        <div className="grid lg:grid-cols-2 gap-16 mt-20 items-center">
+          {/* Left Side: Illustration / Image with Frame */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-emerald-700/5 -rotate-2 rounded-[2rem] border border-stone-900/5 transition-transform group-hover:rotate-0" />
+            <div className="relative bg-white border border-stone-900/10 p-4 rounded-[2rem] shadow-sm">
+              <img
+                className="w-full h-auto rounded-[1.5rem] grayscale group-hover:grayscale-0 transition-all duration-700"
+                src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png"
+                alt="System Preview"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-center gap-6 max-w-md group cursor-pointer">
-            <div className="p-6 group-hover:bg-green-100 border border-transparent group-hover:border-green-300 flex gap-4 rounded-xl transition-colors">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-6 stroke-green-600"
+
+          {/* Right Side: Sophisticated Feature List */}
+          <div className="space-y-6">
+            {featureList.map((item, idx) => (
+              <div
+                key={idx}
+                onMouseEnter={() => setActiveFeature(idx)}
+                className={`relative pl-8 py-8 transition-all duration-500 border-l ${
+                  activeFeature === idx
+                    ? "border-emerald-700 bg-white shadow-[0px_10px_30px_-15px_rgba(0,0,0,0.05)]"
+                    : "border-stone-900/10 hover:border-emerald-700/30"
+                }`}
               >
-                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="text-base font-semibold text-slate-700">
-                  Bank-Grade Security
-                </h3>
-                <p className="text-sm text-slate-600 max-w-xs">
-                  End-to-end encryption, 2FA, compliance with GDPR standards.
-                </p>
+                <div className={`flex gap-6 items-start`}>
+                  <div
+                    className={`p-3 border rounded-xl transition-colors ${
+                      activeFeature === idx
+                        ? "bg-emerald-700 text-white border-emerald-700"
+                        : "bg-white text-stone-400 border-stone-900/10"
+                    }`}
+                  >
+                    {item.icon}
+                  </div>
+
+                  <div className="space-y-1">
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-stone-900">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-stone-500 font-medium leading-relaxed max-w-sm">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Micro-Interaction Indicator */}
+                {activeFeature === idx && (
+                  <div className="absolute top-0 right-0 h-1 w-1 bg-emerald-700 m-4 rounded-full" />
+                )}
               </div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center gap-6 max-w-md group cursor-pointer">
-            <div className="p-6 group-hover:bg-orange-100 border border-transparent group-hover:border-orange-300 flex gap-4 rounded-xl transition-colors">
-              <svg
-                className="size-6 stroke-orange-600"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 15V3" />
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <path d="m7 10 5 5 5-5" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="text-base font-semibold text-slate-700">
-                  Customizable Reports
-                </h3>
-                <p className="text-sm text-slate-600 max-w-xs">
-                  Export professional, audit-ready financial reports for tax or
-                  internal review.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-      <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-            
-                * {
-                    font-family: 'Poppins', sans-serif;
-                }
-            `}</style>
     </div>
   );
 };
+
 export default Features;

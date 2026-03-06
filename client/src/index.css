@@ -30,3 +30,34 @@
         @apply focus:ring-blue-500 focus:border-blue-500;
     }
 }
+
+@media print {
+    /* Hide the entire root UI and sidebar */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Only show the ref area and its children */
+    .print-container,
+    .print-container * {
+        visibility: visible;
+    }
+
+    /* Position the resume at the very top left of the page */
+    .print-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Force remove all neo-brutalist shadows and dark backgrounds */
+    .no-print,
+    nav,
+    button,
+    .lg\:col-span-5 {
+        display: none !important;
+    }
+}

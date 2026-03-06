@@ -5,6 +5,7 @@ import {
   deleteResume,
   getResumeById,
   updateResume,
+  createTailorResume,
 } from "../controllers/resumeController.js";
 import upload from "../configs/multer.js";
 
@@ -14,5 +15,6 @@ resumeRouter.post("/create", protect, createResume);
 resumeRouter.delete("/delete/:resumeId", protect, deleteResume);
 resumeRouter.get("/get/:resumeId", protect, getResumeById);
 resumeRouter.put("/update", upload.single("image"), protect, updateResume);
+resumeRouter.post("/create-tailor", protect, createTailorResume);
 
 export default resumeRouter;

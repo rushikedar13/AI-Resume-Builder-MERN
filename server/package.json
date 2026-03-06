@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "type": "module",
-   "scripts": {
-   "start": "node server.js",
-   "server": "nodemon server.js"
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "keywords": [
     "resume",
@@ -18,19 +18,22 @@
   "license": "MIT",
   "description": "AI-powered resume builder backend API with Gemini integration",
   "dependencies": {
+    "@clerk/clerk-react": "^5.60.0",
     "@google/generative-ai": "^0.24.1",
     "@imagekit/nodejs": "^7.1.1",
-    "axios": "^1.13.2",
+    "axios": "^1.13.4",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "from": "^0.1.7",
     "groq-sdk": "^0.37.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.563.0",
     "mongoose": "^8.19.3",
     "multer": "^2.0.2",
-    "openai": "^6.8.1"
+    "openai": "^6.8.1",
+    "user": "^0.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

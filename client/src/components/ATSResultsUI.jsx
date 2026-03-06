@@ -9,7 +9,7 @@ import {
   FileText,
 } from "lucide-react";
 
-const ATSResultsUI = ({ data }) => {
+const ATSResultsUI = ({ data, onClear }) => {
   const resultsRef = useRef(null);
 
   // Automatically scroll to results when data arrives
@@ -38,18 +38,39 @@ const ATSResultsUI = ({ data }) => {
   return (
     <div
       ref={resultsRef}
-      className="max-w-4xl mx-auto p-6 space-y-8 bg-white rounded-xl shadow-lg border border-slate-200 animate-in fade-in slide-in-from-bottom-4 duration-500"
+      className="max-w-4xl mx-auto p-6 space-y-8 bg-white rounded-[2rem] shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)] border-[3px] border-stone-900 animate-in fade-in slide-in-from-bottom-4 duration-500 mb-10"
     >
       {/* Header & Score Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-100">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase mb-2">
-            Analysis Complete
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b-2 border-dashed border-stone-200">
+        <div className="flex-1">
+          <div className="flex justify-between items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-black uppercase mb-2">
+                Analysis Complete
+              </div>
+              {/* <h2 className="text-3xl font-black text-stone-900 flex items-center gap-2 uppercase tracking-tighter">
+                <FileText className="w-8 h-8 text-stone-900 shrink-0" />
+                ATS Report
+              </h2>*/}
+            </div>
+
+            {/* The Clear Button */}
+            <button
+              onClick={onClear}
+              className="px-4 py-2 bg-white border-2 border-stone-900 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(28,25,23,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all active:scale-95"
+            >
+              Clear Analysis
+            </button>
           </div>
-          <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
-            <FileText className="w-6 h-6 text-blue-500 shrink-0" />
-            ATS Analysis Report
-          </h2>
+
+          {/* <div
+            className={`flex flex-col items-center justify-center w-32 h-32 rounded-3xl border-[3px] border-stone-900 shrink-0 transition-all duration-1000 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ${getScoreColor(score)}`}
+          >
+            <span className="text-4xl font-black">{score}%</span>
+            <span className="text-[10px] font-black uppercase tracking-widest">
+              Match
+            </span>
+          </div>*/}
         </div>
 
         <div

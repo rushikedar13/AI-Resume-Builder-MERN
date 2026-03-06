@@ -1,166 +1,119 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
+import { Linkedin, Twitter, Youtube, ExternalLink } from "lucide-react";
 
 const Footer = () => {
   return (
-    <>
-      <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-            
-                * {
-                    font-family: 'Poppins', sans-serif;
-                }
-            `}</style>
-
-      <footer className="flex flex-wrap justify-center lg:justify-between overflow-hidden gap-10 mt-30 md:gap-20 py-16 px-6 md:px-16 lg:px-24 xl:px-32 text-[13px] text-gray-500 bg-gradient-to-r from-white via-green-200/40 to-white">
-        <div className="flex flex-wrap items-start gap-10 md:gap-[60px] xl:gap-[140px]">
-          <a href="#">
-            <img src={logo} alt="logo-text" />
-          </a>
-          <div>
-            <p className="text-slate-800 font-semibold">Product</p>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Support
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Affiliate
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-slate-800 font-semibold">Resources</p>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Company
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Blogs
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Community
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Careers
-                  <span className="text-xs text-white bg-green-600 rounded-md ml-2 px-2 py-1">
-                    We’re hiring!
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  About
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-slate-800 font-semibold">Legal</p>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a href="/" className="hover:text-green-600 transition">
-                  Terms
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="flex flex-col max-md:items-center max-md:text-center gap-2 items-end">
-          <p className="max-w-60">
-            Making every customer feel valued—no matter the size of your
-            audience.
-          </p>
-          <div className="flex items-center gap-4 mt-3">
+    <footer className="w-full bg-[#f5f5dc] border-t-[3px] border-stone-900 pt-20 pb-10 px-6 md:px-16 lg:px-24">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+          {/* Logo & Vision */}
+          <div className="space-y-6">
             <a
-              href="https://www.linkedin.com/in/dheeraj-sai-goutham"
-              target="_blank"
-              rel="noreferrer"
+              href="#"
+              className="inline-block p-2 bg-white border-2 border-stone-900 rounded-xl shadow-[4px_4px_0px_0px_rgba(28,25,23,1)]"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-linkedin size-5 hover:text-green-500"
-                aria-hidden="true"
-              >
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect width="4" height="12" x="2" y="9"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
-              </svg>
+              <img src={logo} alt="logo" className="h-8 w-auto" />
             </a>
-            <a href="https://x.com" target="_blank" rel="noreferrer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-twitter size-5 hover:text-green-500"
-                aria-hidden="true"
-              >
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-              </svg>
-            </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-youtube size-6 hover:text-green-500"
-                aria-hidden="true"
-              >
-                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-                <path d="m10 15 5-3-5-3z"></path>
-              </svg>
-            </a>
+            <p className="text-stone-600 font-bold text-sm leading-relaxed max-w-xs">
+              Engineering the future of professional narratives with advanced AI
+              logic and sophisticated design.
+            </p>
           </div>
-          <p className="mt-3 text-center">© 2025 AI Resume Builder.</p>
+
+          {/* Navigation Groups */}
+          <FooterGroup title="Product">
+            <FooterLink href="/">Technical Suite</FooterLink>
+            <FooterLink href="/">Support Core</FooterLink>
+            <FooterLink href="/">Architecture</FooterLink>
+            <FooterLink href="/">Partnerships</FooterLink>
+          </FooterGroup>
+
+          <FooterGroup title="Resources">
+            <FooterLink href="/">Knowledge Base</FooterLink>
+            <FooterLink href="/">Internal Blog</FooterLink>
+            <FooterLink href="/">
+              Career Portal
+              <span className="ml-2 text-[8px] font-black bg-emerald-700 text-white px-1.5 py-0.5 rounded uppercase tracking-tighter">
+                Hiring
+              </span>
+            </FooterLink>
+            <FooterLink href="/">About Studio</FooterLink>
+          </FooterGroup>
+
+          {/* Connect & Legal */}
+          <div className="flex flex-col gap-8">
+            <FooterGroup title="Connect">
+              <div className="flex gap-4">
+                <SocialIcon
+                  href="https://linkedin.com"
+                  icon={<Linkedin size={18} />}
+                />
+                <SocialIcon href="https://x.com" icon={<Twitter size={18} />} />
+                <SocialIcon
+                  href="https://youtube.com"
+                  icon={<Youtube size={18} />}
+                />
+              </div>
+            </FooterGroup>
+
+            <FooterGroup title="Legal">
+              <FooterLink href="/">Privacy Protocol</FooterLink>
+              <FooterLink href="/">Service Terms</FooterLink>
+            </FooterGroup>
+          </div>
         </div>
-      </footer>
-    </>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t-2 border-stone-900/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400">
+            © 2026 AI Resume Builder // System Version 1.5
+          </p>
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-700">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
+            All Systems Operational
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
+
+// --- Footer Sub-Components ---
+
+const FooterGroup = ({ title, children }) => (
+  <div className="flex flex-col gap-4">
+    <h3 className="text-xs font-black uppercase tracking-[0.4em] text-stone-900 border-b border-stone-900/10 pb-2">
+      {title}
+    </h3>
+    <ul className="flex flex-col gap-2">{children}</ul>
+  </div>
+);
+
+const FooterLink = ({ href, children }) => (
+  <li>
+    <a
+      href={href}
+      className="text-stone-500 font-bold text-[13px] hover:text-emerald-700 hover:translate-x-1 transition-all flex items-center gap-1 group"
+    >
+      {children}
+      <ExternalLink
+        size={10}
+        className="opacity-0 group-hover:opacity-100 transition-opacity"
+      />
+    </a>
+  </li>
+);
+
+const SocialIcon = ({ href, icon }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    className="p-2.5 bg-white border-2 border-stone-900 rounded-lg text-stone-900 shadow-[3px_3px_0px_0px_rgba(28,25,23,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+  >
+    {icon}
+  </a>
+);
 
 export default Footer;

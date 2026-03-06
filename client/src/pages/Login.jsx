@@ -5,9 +5,10 @@ import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Lock, User, Sparkles, ArrowRight } from "lucide-react";
 
 const Login = () => {
-  // const [state, setState] = useState("login");
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const state = searchParams.get("state") || "login";
@@ -19,13 +20,11 @@ const Login = () => {
   });
 
   const handleChange = (e) => {
-    // console.log(e);
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
-    // console.log(e);
     e.preventDefault();
     try {
       const { data } = await api.post(`/api/users/${state}`, formData);
@@ -33,142 +32,134 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       toast.success(data.message);
     } catch (error) {
-      toast(error?.response?.data?.message || error.message);
+      toast.error(error?.response?.data?.message || error.message);
     }
   };
 
-  console.log("getting state", state);
-
   return (
-    <div className="relative flex justify-center h-screen items-center">
-      <Link
-        to="/"
-        className="absolute top-4 left-35 border border-black rounded-full pb-2 pr-4 pl-4"
-      >
-        <img src={logo} alt="logo-image" className="h-11 w-auto" />
-      </Link>
-      <form
-        onSubmit={handleSubmit}
-        className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
-      >
-        <h1 className="text-gray-900 text-3xl mt-10 font-medium">
-          {state === "login" ? "Login" : "Sign Up"}
-        </h1>
-        <p className="text-gray-500 text-sm mt-2">Please Sign In to continue</p>
-        {/* state is === Sign Up  */}
-        {state !== "login" && (
-          <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#6B7280"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-user-round-icon lucide-user-round"
-            >
-              <circle cx="12" cy="8" r="5" />
-              <path d="M20 21a8 8 0 0 0-16 0" />
-            </svg>
-            <input
-              value={formData.name}
-              type="text"
-              name="name"
-              placeholder="Name"
-              onChange={handleChange}
-              className="border-none outline-none ring-0"
-              required
-            />
-          </div>
-        )}
-        <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#6B7280"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-mail-icon lucide-mail"
-          >
-            <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-          </svg>
+    <div className="min-h-screen bg-[#fcfcf9] flex items-center justify-center p-6 selection:bg-emerald-100">
+      {/* Absolute Logo Header */}
+      <div className="absolute top-10 left-10 flex items-center gap-3">
+        <Link
+          to="/"
+          className="p-3 bg-white border-2 border-stone-900 rounded-2xl shadow-[4px_4px_0px_0px_rgba(28,25,23,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+        >
+          <img src={logo} alt="logo" className="h-8 w-auto" />
+        </Link>
+      </div>
 
-          <input
-            value={formData.email}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="w-full max-w-[440px] bg-white border-[3px] border-stone-900 rounded-[3rem] p-12 shadow-[12px_12px_0px_0px_rgba(85,107,47,0.2)]"
+      >
+        <header className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="p-2 bg-emerald-100 text-emerald-700 rounded-xl">
+              <Sparkles size={20} />
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">
+              AI Powered Workspace
+            </span>
+          </div>
+
+          <h1 className="text-4xl font-black text-stone-900 tracking-tight leading-none mb-3">
+            {state === "login" ? "Welcome Back." : "Get Started."}
+          </h1>
+          <p className="text-stone-500 font-bold text-sm">
+            {state === "login"
+              ? "Enter your credentials to access the audit suite."
+              : "Create your account to start building resumes."}
+          </p>
+        </header>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <AnimatePresence mode="wait">
+            {state !== "login" && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                <BoldInput
+                  icon={<User size={20} />}
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <BoldInput
+            icon={<Mail size={20} />}
             type="email"
             name="email"
-            placeholder="Email ID"
+            placeholder="Email Address"
+            value={formData.email}
             onChange={handleChange}
-            className="border-none outline-none ring-0"
-            required
           />
-        </div>
-        <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#6B7280"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-lock-icon lucide-lock"
-          >
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
 
-          <input
-            value={formData.password}
+          <BoldInput
+            icon={<Lock size={20} />}
             type="password"
             name="password"
             placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
-            className="border-none outline-none ring-0"
-            required
           />
-        </div>
-        <div className="mt-2 mb-2 text-center text-green-500">
-          <button className="text-sm " type="reset">
-            Forget password?
-          </button>
-        </div>
 
-        <button
-          type="submit"
-          className="mt-2 w-full h-11 rounded-full text-white bg-green-500 hover:opacity-90 transition-opacity"
-        >
-          {state !== "login" ? "Sign Up" : "Login"}
-        </button>
-        <p className="text-gray-600 text-sm mt-3 mb-11">
-          {state === "login"
-            ? "Don't have an account?"
-            : "Already have an account? "}
-          <a
-            onClick={() => {
-              if (state === "login") {
-                setSearchParams({ state: "register" });
-              } else {
-                setSearchParams({ state: "login" });
-              }
-            }}
-            className="text-green-500 hover:underline"
-          >
-            {" "}
-            click here
-          </a>
-        </p>
-      </form>
+          <div className="pt-4 space-y-6">
+            <button
+              type="submit"
+              className="w-full bg-emerald-700 text-white py-5 rounded-[1.5rem] font-black text-lg shadow-[0px_8px_0px_0px_rgba(5,150,105,0.3)] hover:bg-emerald-800 hover:translate-y-[2px] hover:shadow-[0px_4px_0px_0px_rgba(5,150,105,0.3)] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-3 uppercase tracking-wider"
+            >
+              {state === "login" ? "Sign In" : "Initialize Account"}
+              <ArrowRight size={22} />
+            </button>
+
+            <div className="flex flex-col items-center gap-4">
+              <button
+                type="button"
+                onClick={() =>
+                  setSearchParams({
+                    state: state === "login" ? "register" : "login",
+                  })
+                }
+                className="group text-sm font-bold text-stone-400 hover:text-[#556b2f] transition-colors"
+              >
+                {state === "login" ? "Need an account?" : "Already a member?"}
+                <span className="ml-2 text-stone-900 group-hover:underline decoration-[#556b2f] underline-offset-4 decoration-2">
+                  {state === "login" ? "Join the Waitlist" : "Log In instead"}
+                </span>
+              </button>
+
+              <div className="w-16 h-1 bg-stone-100 rounded-full" />
+
+              <p className="text-[10px] font-black text-stone-300 uppercase tracking-[0.3em]">
+                Verified Secured Session
+              </p>
+            </div>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+const BoldInput = ({ icon, ...props }) => {
+  return (
+    <div className="relative group">
+      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-emerald-600 transition-colors">
+        {icon}
+      </div>
+      <input
+        {...props}
+        className="w-full bg-stone-100 border-2 border-transparent p-5 pl-14 rounded-2xl outline-none font-bold text-stone-800 placeholder:text-stone-400 focus:bg-white focus:border-emerald-600 focus:shadow-[0_0_0_4px_rgba(16,185,129,0.1)] transition-all"
+        required
+      />
     </div>
   );
 };

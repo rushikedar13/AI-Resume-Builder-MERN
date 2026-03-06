@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const protect = async (req, res, next) => {
   // 1. Get the header
   const authHeader = req.headers.authorization;
-  
+
   // 2. Check if it exists and starts with Bearer
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "No token provided" });

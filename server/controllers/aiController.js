@@ -31,7 +31,7 @@ export const enhanceProfessionalSummary = async (req, res) => {
 };
 
 /**
- * 2. Enhance Job Description (FIXED)
+ * 2. Enhance Job Description
  */
 export const enhanceJobDesc = async (req, res) => {
   try {
@@ -60,7 +60,7 @@ export const enhanceJobDesc = async (req, res) => {
 };
 
 /**
- * 3. Upload and Parse Resume
+ * 3. Upload and Parse Resume (CLEANED & FIXED)
  */
 export const uploadResume = async (req, res) => {
   try {
@@ -75,36 +75,40 @@ export const uploadResume = async (req, res) => {
         {
           role: "system",
           content:
-            "You are a professional data extractor. Convert raw text into a clean JSON object.",
+            "You are a professional data extractor. Extract EVERY detail from the text into JSON. Do not omit experience or skills.",
         },
         {
           role: "user",
-          content: `Extract from: "${resumeText}"
-          Return JSON:
+          content: `Extract data from: "${resumeText}"
+          Return ONLY a JSON object using these EXACT keys to match my database schema:
           {
-            "personalInfo": { "fullName": "string", "email": "string", "phone": "string", "linkedin": "string","location": "string" },
-            "summary": "string",
-            "skills": ["string"],
-            "experience": [{ "company": "string", "role": "string", "desc": "string" }],
-            "education": [{ "school": "string", "degree": "string" }]
+            "personal_info": { "full_name": "", "email": "", "phone": "", "linkedin": "", "location": "", "profession": "", "website": "" },
+            "professional_summary": "",
+            "skills": [],
+            "experience": [{ "company": "", "position": "", "description": "", "start_date": "", "end_date": "" }],
+            "education": [{ "institution": "", "degree": "", "field": "", "graduation_date": "" }]
           }`,
         },
       ],
       model: "llama-3.3-70b-versatile",
       response_format: { type: "json_object" },
+      temperature: 0.1,
     });
 
     const parsedData = JSON.parse(chatCompletion.choices[0].message.content);
 
+    // Save with the Correct Spread Logic
     const newResume = await Resume.create({
       userId,
       title: title || "Imported Resume",
       ...parsedData,
     });
 
-    return res
-      .status(201)
-      .json({ message: "Success", resumeId: newResume._id });
+    return res.status(201).json({
+      message: "Success",
+      resumeId: newResume._id,
+      resume: newResume,
+    });
   } catch (error) {
     console.error("❌ Extraction Error:", error.message);
     return res.status(500).json({ message: "Failed to parse resume" });
@@ -117,26 +121,16 @@ export const uploadResume = async (req, res) => {
 export const checkATSScore = async (req, res) => {
   try {
     const { jobDescription, cvText } = req.body;
-    // ... validation ...
 
     const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "system",
-          content:
-            "You are a highly accurate ATS. Return strictly a JSON object.",
+          content: `You are an expert Applicant Tracking System (ATS). Provide a realistic match percentage (0-100) and analysis. Return strictly JSON.`,
         },
         {
           role: "user",
-          content: `JD: ${jobDescription}\nResume: ${cvText}
-           Return JSON:
-           {
-             "score": number,
-             "strengths": ["string"],
-             "weaknesses": ["string"],
-             "missingKeywords": ["string"],
-             "suggestions": ["string"]
-           }`,
+          content: `JOB DESCRIPTION: ${jobDescription}\nRESUME TEXT: ${cvText}\nReturn JSON: { "score": number, "strengths": [], "weaknesses": [], "missingKeywords": [], "suggestions": [] }`,
         },
       ],
       model: "llama-3.3-70b-versatile",
@@ -144,6 +138,10 @@ export const checkATSScore = async (req, res) => {
     });
 
     const parsedAnalysis = JSON.parse(completion.choices[0].message.content);
+    if (parsedAnalysis.score > 0 && parsedAnalysis.score <= 1) {
+      parsedAnalysis.score = Math.round(parsedAnalysis.score * 100);
+    }
+
     return res.status(200).json({ analysis: parsedAnalysis });
   } catch (error) {
     console.error("❌ ATS Error:", error.message);
@@ -151,34 +149,32 @@ export const checkATSScore = async (req, res) => {
   }
 };
 
-export const generateTailoredResume = async (resumeText, jobDescription) => {
+/**
+ * 5. Tailor Resume
+ */
+export const tailorResume = async (req, res) => {
   try {
-    const response = await groq.chat.completions.create({
+    const { resumeData, jobDescription } = req.body;
+
+    const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "system",
-          content:
-            "You are a professional resume writer. Your goal is to rewrite the provided resume to better align with the job description. Do not hallucinate experiences; only rephrase existing points to highlight relevant skills. Return the result in clean Markdown format.",
+          content: `Rewrite the resume JSON to align with the JD. Use the EXACT schema keys provided.`,
         },
         {
           role: "user",
-          content: `
-             JOB DESCRIPTION:
-             ${jobDescription}
-
-             ORIGINAL RESUME:
-             ${resumeText}
-
-             Please provide a tailored version of this resume.
-           `,
+          content: `JD: ${jobDescription}\nResume JSON: ${JSON.stringify(resumeData)}`,
         },
       ],
       model: "llama-3.3-70b-versatile",
-      temperature: 0.5,
+      response_format: { type: "json_object" },
     });
 
-    return response.choices[0].message.content;
+    const tailoredContent = JSON.parse(completion.choices[0].message.content);
+    res.status(200).json({ success: true, tailoredContent });
   } catch (error) {
-    console.error("Tailoring Error:", error);
+    console.error("GROQ API ERROR:", error.message);
+    res.status(500).json({ error: "Tailoring failed" });
   }
 };
