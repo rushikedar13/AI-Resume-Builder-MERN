@@ -305,13 +305,14 @@ const ResumeBuilder = () => {
                         resumeData={resumeData}
                       />
                     )}
-                    <ExperienceForm
-                      data={resumeData?.experience}
-                      onChange={(d) =>
-                        setResumeData((p) => ({ ...p, experience: d }))
-                      }
-                    />
-
+                    {activeSection.id === "experience" && (
+  <ExperienceForm
+    data={resumeData?.experience}
+    onChange={(d) =>
+      setResumeData((p) => ({ ...p, experience: d }))
+    }
+  />
+)}
                     {activeSection.id === "education" && (
                       <EducationForm
                         data={resumeData?.education}

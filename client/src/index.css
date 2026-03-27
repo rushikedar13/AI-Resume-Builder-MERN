@@ -32,18 +32,30 @@
 }
 
 @media print {
-    /* Hide the entire root UI and sidebar */
+
+    /* Remove browser header & footer space */
+    @page {
+        margin: 0;
+        size: A4;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide everything */
     body * {
         visibility: hidden;
     }
 
-    /* Only show the ref area and its children */
+    /* Show only resume */
     .print-container,
     .print-container * {
         visibility: visible;
     }
 
-    /* Position the resume at the very top left of the page */
+    /* Position resume perfectly */
     .print-container {
         position: absolute;
         left: 0;
@@ -53,7 +65,7 @@
         padding: 0 !important;
     }
 
-    /* Force remove all neo-brutalist shadows and dark backgrounds */
+    /* Hide builder UI */
     .no-print,
     nav,
     button,

@@ -34,12 +34,18 @@ const Hero = () => {
           <a href="#demo" className="hover:text-emerald-700 transition-colors">
             Architecture
           </a>
-          <a
-            href="#contact"
-            className="hover:text-emerald-700 transition-colors"
+          <Link
+          to="/contact"
+          className="hover:text-emerald-700 transition-colors"
           >
-            Contact
-          </a>
+          Contact
+        </Link>
+         <Link
+          to="/aboutus"
+          className="hover:text-emerald-700 transition-colors"
+          >
+          About Us
+        </Link>
         </div>
 
         <div className="flex items-center gap-4">
