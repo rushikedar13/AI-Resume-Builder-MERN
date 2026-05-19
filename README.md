@@ -129,3 +129,4 @@ This project showcases the integration of modern full-stack technologies with AI
   * The teams behind [Vite](https://vitejs.dev/) and [MongoDB](https://www.mongodb.com/).
   * [Lucide](https://lucide.dev/) for the icon set.
   * Google Gemini AI for intelligent content generation.
+# AI-resume-Builder-server
