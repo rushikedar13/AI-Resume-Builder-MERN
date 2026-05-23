@@ -10,14 +10,25 @@ import aiRoutes from "./routes/aiRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//Database Connection
+// Database Connection
 await connectDB();
 
-// MiddleWare
 app.use(express.json());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://ai-resume-builder-va8p.onrender.com"
+];
+
+if (process.env.FRONTEND_URL) {
+  const urls = process.env.FRONTEND_URL.split(",").map(url => url.trim());
+  allowedOrigins.push(...urls);
+}
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: allowedOrigins,
     credentials: true,
   }),
 );

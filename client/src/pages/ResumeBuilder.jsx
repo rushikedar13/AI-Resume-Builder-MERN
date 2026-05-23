@@ -108,7 +108,7 @@ const ResumeBuilder = () => {
       try {
         // ResumeBuilder.jsx line 108 (approx)
         const response = await api.get(
-          `http://localhost:5000/api/resumes/get/${resumeId}`,
+          `/api/resumes/get/${resumeId}`,
         ); // Ensure you are setting the data correctly based on your API response structure
         setResumeData(response.data.resume || response.data);
       } catch (err) {
