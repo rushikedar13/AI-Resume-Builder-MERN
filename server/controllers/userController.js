@@ -43,6 +43,7 @@ export const registerUser = async (req, res) => {
       user: newUser,
     });
   } catch (error) {
+    console.error("Registration Error:", error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -73,6 +74,7 @@ export const loginUser = async (req, res) => {
       user,
     });
   } catch (error) {
+    console.error("Login Error:", error);
     res.status(400).json({ message: error.message });
   }
 };
